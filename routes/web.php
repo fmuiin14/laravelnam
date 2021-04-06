@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,18 +12,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('admin-page', function() {
-    return 'Halaman untuk Admin';
-})->middleware('role:admin')->name('admin.page');
+// Route::get('admin-page', )->middleware('role:admin')->name('admin.page');
 
-Route::get('user-page', function() {
-    return 'Halaman untuk User';
-})->middleware('role:finance')->name('finance.page');
+// Route::get('user-page', function() {
+//     return 'Halaman untuk User';
+// })->middleware('role:finance')->name('finance.page');
+
+// Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
