@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+    Home - App Penggajian Project 
+@endsection
+
 @section('content')
 
     <div class="section-header">
@@ -13,7 +17,7 @@
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>Total Admin</h4>
+                        <h4>Data Pegawai</h4>
                     </div>
                     <div class="card-body">
                         10
@@ -28,7 +32,7 @@
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>News</h4>
+                        <h4>Data Kehadiran</h4>
                     </div>
                     <div class="card-body">
                         42
@@ -43,7 +47,7 @@
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>Reports</h4>
+                        <h4>Data Jabatan</h4>
                     </div>
                     <div class="card-body">
                         1,201
@@ -58,7 +62,7 @@
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>Online Users</h4>
+                        <h4>Data Penggajian</h4>
                     </div>
                     <div class="card-body">
                         47
