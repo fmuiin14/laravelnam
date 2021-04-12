@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/employee', 'EmployeeController@index')->name('employee');
+Route::get('/employee-create', 'EmployeeController@create')->name('employee-create');
 
 // Route::get('admin-page', )->middleware('role:admin')->name('admin.page');
 

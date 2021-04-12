@@ -13,7 +13,7 @@
     <div class="row mb-3">
         <div class="col-12">
             <div class="float-right">
-                <a href="#" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Tambah Data Karyawan</a>
+                <a href="{{route('employee-create')}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Tambah Data Karyawan</a>
             </div>
         </div>
     </div>

@@ -30,4 +30,8 @@ class EmployeeController extends Controller
 
         return view('pages.employee');
     }
+
+    public function create() {
+        return view('pages.employee-create');
+    }
 }
