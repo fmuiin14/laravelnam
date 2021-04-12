@@ -92,6 +92,8 @@
     </div>
 
    @include('includes.script')
+
+   @yield('datatable-data')
 </body>
 
 </html>

@@ -23,7 +23,7 @@ class EmployeeTableSeeder extends Seeder
 
         $employee = Employee::create([
             'nik' => '2',
-            'nama_pegawai' => 'admin@fmuiin.com',
+            'nama_pegawai' => 'Dua Pegawai',
             'jenis_kelamin' => 'F',
             'tanggal_masuk' => \Carbon\Carbon::createFromDate(2000,01,01)->toDateTimeString(),
             'status_karyawan' => 'tetap',
