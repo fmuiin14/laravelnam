@@ -23,12 +23,26 @@ class EmployeeController extends Controller
             $employees = Employee::all();
             return Datatables::of($employees)
                 ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                ->addColumn('action', function () {
+                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View Detail</a>';
 
                     return $btn;
                 })
-                ->rawColumns(['action'])->make(true);
+                ->addColumn('jenis_kelamin', function($data) {
+                    if($data->jenis_kelamin == 'M'){
+                        return 'Laki - Laki';
+                    }else{
+                        return 'Perempuan';
+                    }
+                })
+                ->addColumn('data', function () {
+                    $btn = '<a href="javascript:void(0)" class="delete badge badge-danger btn-sm">hapus</a>
+                    <a href="javascript:void(0)" class="info badge badge-info btn-sm">edit</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action', 'data'])->make(true);
+                // ->rawColumns(['data'])->make(true);
         }
 
         return view('pages.employee');
@@ -51,16 +65,18 @@ class EmployeeController extends Controller
             'photo' => 'required'
         ]);
 
-        $photo = $request->photo;
-        $new_photo = time() . $photo->getClientOriginalName();
+        if ($request->file('photo')) {
+            $file = $request->file('photo')->store('photos', 'public');
+            // $new_user->avatar = $file;
+        }
 
         $nikjabs = $request->jabatan_id;
-        
+
         $nik1 = DB::table('employee')->latest('id')->first();
-        $nikidny = $nik1->id+1;
+        $nikidny = $nik1->id + 1;
 
         $nikth = date("Ym", strtotime($request->datenya));
-        
+
         $nikfix = $nikjabs . $nikth . $nikidny;
 
         $employee = Employee::create([
@@ -70,12 +86,8 @@ class EmployeeController extends Controller
             'jenis_kelamin' => $request->j_k,
             'tanggal_masuk' => Carbon::createFromFormat('Y-m-d', $request->datenya),
             'status_karyawan' => $request->status,
-            'photo' => 'public/uploads/photo/' . $new_photo
+            'photo' => $file
         ]);
-
-        // $employee->jabatan()->attach($request->jabatan_id);
-
-        $photo->move('public/uploads/posts/', $new_photo);
 
         return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
