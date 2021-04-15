@@ -28,21 +28,24 @@ class EmployeeController extends Controller
 
                     return $btn;
                 })
-                ->addColumn('jenis_kelamin', function($data) {
-                    if($data->jenis_kelamin == 'M'){
+                ->addColumn('jenis_kelamin', function ($data) {
+                    if ($data->jenis_kelamin == 'M') {
                         return 'Laki - Laki';
-                    }else{
+                    } else {
                         return 'Perempuan';
                     }
                 })
-                ->addColumn('data', function () {
-                    $btn = '<a href="javascript:void(0)" class="delete badge badge-danger btn-sm">hapus</a>
-                    <a href="javascript:void(0)" class="info badge badge-info btn-sm">edit</a>';
+                ->addColumn('data', function ($data) {
+                    $button = '<button type="button" name="edit" id="' . $data->id . '" class="info badge badge-info btn-sm">Edit</button>';
+                    $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="edit" id="' . $data->id . '" class="delete badge badge-danger btn-sm">Delete</button>';
+                    return $button;
 
-                    return $btn;
+                    // $button = '<button type="button" name="edit" id="'.$row->id.'" class="info badge badge-info btn-sm">Edit</button>';
+                    // $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="edit" id="'.$row->id.'" class="delete badge badge-danger btn-sm">Delete</button>';
+                    // return $button;
                 })
                 ->rawColumns(['action', 'data'])->make(true);
-                // ->rawColumns(['data'])->make(true);
+            // ->rawColumns(['data'])->make(true);
         }
 
         return view('pages.employee');
@@ -90,5 +93,11 @@ class EmployeeController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Data berhasil disimpan!');
+    }
+
+    public function destroy($id)
+    {
+        $data = Employee::findOrFail($id);
+        $data->delete();
     }
 }

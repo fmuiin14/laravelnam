@@ -14,3 +14,10 @@
 
 <!-- datatable -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.css" />
+
+<style>
+    .modal-backdrop {
+        /* bug fix - no overlay */
+        position: inherit !important;
+    }
+</style>

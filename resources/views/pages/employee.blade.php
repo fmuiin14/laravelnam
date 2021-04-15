@@ -22,7 +22,6 @@
 
     <div class="row">
         <div class="col-12">
-
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -48,8 +47,9 @@
 @endsection
 
 @section('datatable-data')
+
     <script type="text/javascript">
-        $(function() {
+        $(document).ready(function() {
 
             var table = $('#table-employee').DataTable({
                 processing: true,
@@ -93,7 +93,49 @@
                 ]
             });
 
+            // Delete article Ajax request.
+            var user_id;
+
+            $(document).on('click', '.delete', function() {
+                user_id = $(this).attr('id');
+                $('#confirmModal').modal('show');
+            });
+
+            $('#ok_button').click(function() {
+                $.ajax({
+                    url: "employee/destroy/" + user_id,
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#confirmModal').modal('hide');
+                            $('#table-employee').DataTable().ajax.reload();
+                            alert('Data Deleted');
+                        }, 2000);
+                    }
+                })
+            });
+
         });
 
     </script>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="confirmModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" name="ok_button" id="ok_button" class="btn btn-primary">Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
