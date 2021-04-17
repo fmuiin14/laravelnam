@@ -44,6 +44,89 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="ajax-product-modal" style="background-color: rgba(10,10,10,0.45);" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="productCrudModal"></h4>
+                </div>
+                <div class="modal-body">
+                    <form id="productForm" name="productForm" class="form-horizontal">
+                        <input type="hidden" name="product_id" id="product_id">
+                        <div class="form-group">
+                            <label for="nik" class="col-sm-12 control-label">NIK</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="nik" name="nik" placeholder="NIK" value=""
+                                    disabled maxlength="50" required="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-sm-12 control-label">Nama Karyawan</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="nama_pegawai" name="nama_pegawai"
+                                    placeholder="Enter nama pegawai" value="" maxlength="50" required="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-sm-12 control-label">Jabatan</label>
+                            <div class="col-sm-12">
+                                <select class="form-control selectric" id="jabatan_id" name="jabatan_id">
+                                    <option selected disabled>Pilih Jabatan</option>
+                                    {{-- @foreach ($salaries as $sallary)
+                                        <option value="{{ $sallary->id }}">{{ $sallary->nama_jabatan }}</option>
+                                    @endforeach --}}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="j_k" class="col-sm-12 control-label">Jenis Kelamin</label>
+                            <div class="col-sm-12">
+                                <select class="form-control" id="j_k">
+                                    <option selected disabled>Pilih Jenis Kelamin</option>
+                                    <option value="M">Laki - Laki</option>
+                                    <option value="F">Perempuan</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="j_k" class="col-sm-12 control-label">Tanggal Masuk</label>
+                            <div class="col-sm-12">
+                                <input type="date" name="date" class="form-control" id="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status_karyawan" class="col-sm-12 control-label">Status Karyawan</label>
+                            <div class="col-sm-12">
+                                <select class="form-control" id="status">
+                                    <option selected disabled>Pilih Status Karyawan</option>
+                                    <option value="tetap">Karyawan Tetap</option>
+                                    <option value="lepas">Karyawan Lepas</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-12 control-label">Photo</label>
+                            <div class="col-sm-12">
+                                <input type="file" name="photo" class="form-control" id="">
+                            </div>
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" id="btn-save" value="create">Save changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('datatable-data')
@@ -113,12 +196,31 @@
                     }
                 })
             });
+            // end delete
+
+            // start edit
+            /* When click edit user */
+            $('body').on('click', '.edit-product', function() {
+                var product_id = $(this).data('id');
+                $.get('employee/edit/' + product_id, function(data) {
+                    $('#productCrudModal').html("Edit Data");
+                    $('#btn-save').val("edit-product");
+                    $('#ajax-product-modal').modal('show');
+                    $('#product_id').val(data.id);
+                    $('#nik').val(data.nik);
+                    $('#nama_pegawai').val(data.nama_pegawai);
+                    $('#jabatan_id').val(data.nama_jabatan);
+                })
+            });
+            // end edit
+
 
         });
 
     </script>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="confirmModal">
+    {{-- delete modal start --}}
+    <div class="modal fade" tabindex="-1" role="dialog" style="background-color: rgba(10,10,10,0.45);" id="confirmModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -137,5 +239,6 @@
             </div>
         </div>
     </div>
+    {{-- delete modal end --}}
 
 @endsection

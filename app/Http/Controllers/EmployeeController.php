@@ -36,13 +36,10 @@ class EmployeeController extends Controller
                     }
                 })
                 ->addColumn('data', function ($data) {
-                    $button = '<button type="button" name="edit" id="' . $data->id . '" class="info badge badge-info btn-sm">Edit</button>';
-                    $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="edit" id="' . $data->id . '" class="delete badge badge-danger btn-sm">Delete</button>';
+                    $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$data->id.'" data-original-title="Edit" class="info badge badge-info btn-sm edit-product">Edit</a>';
+   
+                    $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="delete" id="' . $data->id . '" class="delete badge badge-danger btn-sm">Delete</button>';
                     return $button;
-
-                    // $button = '<button type="button" name="edit" id="'.$row->id.'" class="info badge badge-info btn-sm">Edit</button>';
-                    // $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="edit" id="'.$row->id.'" class="delete badge badge-danger btn-sm">Delete</button>';
-                    // return $button;
                 })
                 ->rawColumns(['action', 'data'])->make(true);
             // ->rawColumns(['data'])->make(true);
@@ -99,5 +96,11 @@ class EmployeeController extends Controller
     {
         $data = Employee::findOrFail($id);
         $data->delete();
+    }
+
+    public function edit($id)
+    {
+        $employees = Employee::findOrFail($id);
+        return response()->json($employees);
     }
 }
