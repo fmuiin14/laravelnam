@@ -20,6 +20,9 @@ Route::post('/employee-store', 'EmployeeController@store')->name('employee-store
 Route::get('/employee/destroy/{id}', 'EmployeeController@destroy')->name('employee-destroy');
 Route::get('/employee-create', 'EmployeeController@create')->name('employee-create');
 
+
+Route::get('/sallary', 'SallaryController@index')->name('sallary.index');
+Route::get('/sallary-create', 'SallaryController@create')->name('sallary.create');
 // Route::get('admin-page', )->middleware('role:admin')->name('admin.page');
 
 // Route::get('user-page', function() {

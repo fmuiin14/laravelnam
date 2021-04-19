@@ -42,7 +42,6 @@ class EmployeeController extends Controller
                     return $button;
                 })
                 ->rawColumns(['action', 'data'])->make(true);
-            // ->rawColumns(['data'])->make(true);
         }
 
         return view('pages.employee');

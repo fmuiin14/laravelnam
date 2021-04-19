@@ -65,8 +65,8 @@
                         <li class="menu-header">Menu</li>
                         <li><a class="nav-link" href="{{route('home')}}"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
                         <li><a class="nav-link" href="{{route('employee')}}"><i class="far fa-user"></i> <span>Data Karyawan</span></a></li>
-                        <!-- <li><a class="nav-link" href="#"><i class="far fa-square"></i> <span>Data Jabatan</span></a></li>
-                        <li><a class="nav-link" href="#"><i class="far fa-square"></i> <span>Data Absensi</span></a></li>
+                        <li><a class="nav-link" href="{{route('sallary.index')}}"><i class="far fa-square"></i> <span>Data Jabatan</span></a></li>
+                        <!--<li><a class="nav-link" href="#"><i class="far fa-square"></i> <span>Data Absensi</span></a></li>
                         <li><a class="nav-link" href="#"><i class="far fa-square"></i> <span>Data Gaji</span></a></li> -->
                     </ul>
                 </aside>
