@@ -178,7 +178,6 @@
 
             // Delete article Ajax request.
             var user_id;
-
             $(document).on('click', '.delete', function() {
                 user_id = $(this).attr('id');
                 $('#confirmModal').modal('show');
@@ -199,19 +198,47 @@
             // end delete
 
             // start edit
-            /* When click edit user */
+            var masterJabatan;
             $('body').on('click', '.edit-product', function() {
                 var product_id = $(this).data('id');
-                $.get('employee/edit/' + product_id, function(data) {
-                    $('#productCrudModal').html("Edit Data");
-                    $('#btn-save').val("edit-product");
-                    $('#ajax-product-modal').modal('show');
-                    $('#product_id').val(data.id);
-                    $('#nik').val(data.nik);
-                    $('#nama_pegawai').val(data.nama_pegawai);
-                    $('#jabatan_id').val(data.nama_jabatan);
+                var url = 'employee/edit/' + product_id;
+                if (masterJabatan == null) {
+                    url += '/0';
+                } else url += '/1';
+
+                $.get(url, function(respond) {
+                        console.log(respond);
+                    if (respond.status) {
+                        if (masterJabatan == null) {
+                            masterJabatan = respond.others.jabatan;
+                        }
+                        console.log(respond.status);
+
+                        var data = respond.others.employee;
+
+                        $('#productCrudModal').html("Edit Data");
+                        $('#btn-save').val("edit-product");
+                        $('#ajax-product-modal').modal('show');
+                        $('#product_id').val(data.id);
+                        $('#nik').val(data.nik);
+                        $('#nama_pegawai').val(data.nama_pegawai);
+                        render_jabatan(data.jabatan_id);
+                    } else {
+                        alert(respond.message);
+                    }
                 })
             });
+
+            function render_jabatan(jabatanID) {
+                // console.log(jabatanID + ' data render');
+                var temp = '';
+                $.each(masterJabatan, function(index, el) {
+                    temp += '<option value="' + el.id + '">' + el.nama_jabatan + '</option>';
+                });
+                console.log(temp);
+
+                $("#jabatan_id").find('option').remove().end().append(temp).val(jabatanID);
+            }
             // end edit
 
 

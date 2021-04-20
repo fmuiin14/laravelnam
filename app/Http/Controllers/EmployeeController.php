@@ -36,8 +36,8 @@ class EmployeeController extends Controller
                     }
                 })
                 ->addColumn('data', function ($data) {
-                    $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$data->id.'" data-original-title="Edit" class="info badge badge-info btn-sm edit-product">Edit</a>';
-   
+                    $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Edit" class="info badge badge-info btn-sm edit-product">Edit</a>';
+
                     $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="delete" id="' . $data->id . '" class="delete badge badge-danger btn-sm">Delete</button>';
                     return $button;
                 })
@@ -97,9 +97,31 @@ class EmployeeController extends Controller
         $data->delete();
     }
 
-    public function edit($id)
+    public function edit($id, $jabatan)
     {
-        $employees = Employee::findOrFail($id);
-        return response()->json($employees);
+        // gabisa pake findOrFail karena ajax
+        // return response()->json($employees);
+        $employees = Employee::find($id);
+        if ($employees) {
+            if ((int) $jabatan == 0) {
+                $jabatan = Sallary::select(['id', 'nama_jabatan'])->get()->toArray();
+            } else $jabatan = [];
+
+            return $this->jsRespond(true, 'Berhasil ambil', [
+                'employee' => $employees->toArray(),
+                'jabatan' => $jabatan
+            ]);
+        } else {
+            return $this->jsRespond(false, 'Data Gagal Diambil');
+        }
+    }
+
+    private function jsRespond($status, $message, $others = [])
+    {
+        return response()->json([
+            'status' => $status,
+            'message' => $message,
+            'others' => $others
+        ]);
     }
 }

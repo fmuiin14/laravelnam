@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/employee', 'EmployeeController@index')->name('employee');
-Route::get('/employee/edit/{id}', 'EmployeeController@edit')->name('employee-edit');
+Route::get('/employee/edit/{id}/{jabatan}', 'EmployeeController@edit')->name('employee-edit');
 Route::post('/employee-store', 'EmployeeController@store')->name('employee-store');
 Route::get('/employee/destroy/{id}', 'EmployeeController@destroy')->name('employee-destroy');
 Route::get('/employee-create', 'EmployeeController@create')->name('employee-create');
