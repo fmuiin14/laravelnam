@@ -73,48 +73,45 @@
                             <div class="col-sm-12">
                                 <select class="form-control selectric" id="jabatan_id" name="jabatan_id">
                                     <option selected disabled>Pilih Jabatan</option>
-                                    {{-- @foreach ($salaries as $sallary)
-                                        <option value="{{ $sallary->id }}">{{ $sallary->nama_jabatan }}</option>
-                                    @endforeach --}}
                                 </select>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="j_k" class="col-sm-12 control-label">Jenis Kelamin</label>
-                            <div class="col-sm-12">
-                                <select class="form-control" id="j_k">
-                                    <option selected disabled>Pilih Jenis Kelamin</option>
-                                    <option value="M">Laki - Laki</option>
-                                    <option value="F">Perempuan</option>
-                                </select>
+                        <!-- <div class="form-group">
+                                <label for="j_k" class="col-sm-12 control-label">Jenis Kelamin</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" id="j_k">
+                                        <option selected disabled>Pilih Jenis Kelamin</option>
+                                        <option value="M">Laki - Laki</option>
+                                        <option value="F">Perempuan</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="j_k" class="col-sm-12 control-label">Tanggal Masuk</label>
-                            <div class="col-sm-12">
-                                <input type="date" name="date" class="form-control" id="">
+                            <div class="form-group">
+                                <label for="j_k" class="col-sm-12 control-label">Tanggal Masuk</label>
+                                <div class="col-sm-12">
+                                    <input type="date" name="date" class="form-control" id="">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="status_karyawan" class="col-sm-12 control-label">Status Karyawan</label>
-                            <div class="col-sm-12">
-                                <select class="form-control" id="status">
-                                    <option selected disabled>Pilih Status Karyawan</option>
-                                    <option value="tetap">Karyawan Tetap</option>
-                                    <option value="lepas">Karyawan Lepas</option>
-                                </select>
+                            <div class="form-group">
+                                <label for="status_karyawan" class="col-sm-12 control-label">Status Karyawan</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" id="status">
+                                        <option selected disabled>Pilih Status Karyawan</option>
+                                        <option value="tetap">Karyawan Tetap</option>
+                                        <option value="lepas">Karyawan Lepas</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-12 control-label">Photo</label>
-                            <div class="col-sm-12">
-                                <input type="file" name="photo" class="form-control" id="">
-                            </div>
-                        </div>
+                            <div class="form-group">
+                                <label class="col-sm-12 control-label">Photo</label>
+                                <div class="col-sm-12">
+                                    <input type="file" name="photo" class="form-control" id="">
+                                </div>
+                            </div> -->
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-primary" id="btn-save" value="create">Save changes
                             </button>
@@ -132,6 +129,7 @@
 @section('datatable-data')
 
     <script type="text/javascript">
+    var SITEURL = '{{URL::to('')}}';
         $(document).ready(function() {
 
             var table = $('#table-employee').DataTable({
@@ -183,6 +181,7 @@
                 $('#confirmModal').modal('show');
             });
 
+
             $('#ok_button').click(function() {
                 $.ajax({
                     url: "employee/destroy/" + user_id,
@@ -207,14 +206,14 @@
                 } else url += '/1';
 
                 $.get(url, function(respond) {
-                        console.log(respond);
+                    console.log(respond);
                     if (respond.status) {
                         if (masterJabatan == null) {
                             masterJabatan = respond.others.jabatan;
                         }
-                        console.log(respond.status);
 
                         var data = respond.others.employee;
+                        console.log(data.jenis_kelamin + ' hasil');
 
                         $('#productCrudModal').html("Edit Data");
                         $('#btn-save').val("edit-product");
@@ -235,11 +234,27 @@
                 $.each(masterJabatan, function(index, el) {
                     temp += '<option value="' + el.id + '">' + el.nama_jabatan + '</option>';
                 });
-                console.log(temp);
 
                 $("#jabatan_id").find('option').remove().end().append(temp).val(jabatanID);
             }
+
             // end edit
+
+            // edit action start
+            if($("#productForm").length > 0) {
+                $("#productForm").validate({
+                    submitHandler: function(form) {
+                        var actionType = $('#btn-save').val();
+                        $('#btn-save').addClass("btn-progress");
+                        
+                        $.ajax({
+                            data: $('#productForm').serialize(),
+                            url: 
+                        });
+                    }
+                });
+            }
+            // edit action end
 
 
         });
